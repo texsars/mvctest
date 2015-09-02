@@ -11,6 +11,7 @@
 	<form action="confirm.action" method="post">
 		用户名：<input name="name" type="text"><br/>
 		密码：<input name="password" type="password"><br/>
+		<input type="submit" value="提交"><br/>
 	</form>
 </body>
 </html>

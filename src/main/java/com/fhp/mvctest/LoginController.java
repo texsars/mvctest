@@ -27,7 +27,7 @@ public class LoginController {
 			return "redirect:/user/index.action";
 		} else {
 			logger.info("用户登录失败。用户名：" + name);
-			return "redirect:/login.jsp";
+			return "redirect:/login.action";
 		}
 	}
 	public ILoginService getLoginService() {

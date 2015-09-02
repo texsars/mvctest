@@ -22,7 +22,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if(null != annotation_method || null != annotation_class) {
 			HttpSession session = request.getSession();
 			if(null == session.getAttribute("user")) {
-				response.sendRedirect(request.getContextPath() + "/login.jsp");
+				response.sendRedirect(request.getContextPath() + "/login.action");
 				return false;
 			}
 		}
