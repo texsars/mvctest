@@ -35,6 +35,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	@AccessRequired
 	@RequestMapping(value = "/index.action", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -49,6 +50,7 @@ public class HomeController {
 		return "home";
 	}
 
+	@AccessRequired
 	@RequestMapping(value = "/jsontest.action", produces="application/json;charset=UTF-8")
 	public @ResponseBody Object JsonTest(Locale locale, Model model) {
 		logger.info("JsonTest start! The client locale is {}.", locale);
