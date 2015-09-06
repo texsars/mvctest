@@ -22,4 +22,27 @@
         <property name="password" value="${jdbc.password}"/>
      </bean>
 	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <tx:annotation-driven />
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.fhp.mybatistest.dao" />
+    </bean>
+	
+	<bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+      <property name="mapperInterface" value="com.fhp.mybatistest.dao.IUserDao" />
+      <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
+    	
+    </bean>
+    
+    <bean id="userService" class="com.fhp.mvctest.service.UserService">
+    	<property name="userDao" ref="userDao"></property>
+    </bean>
 </beans>
