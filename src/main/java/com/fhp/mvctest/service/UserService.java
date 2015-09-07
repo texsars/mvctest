@@ -20,45 +20,53 @@ public class UserService implements IUSerService {
 	}
 
 	@Override
-	public void Add() {
-		// TODO Auto-generated method stub
-		
+	public void Add(User user) throws UserExistsException {
+		if(Exists(user.getUsername())) {
+			throw new UserExistsException("This username has been used.");
+		}
+		userDao.Add(user);
 	}
 
 	@Override
 	public void Delete(int id) {
-		// TODO Auto-generated method stub
-		
+		userDao.Delete(id);
 	}
 
 	@Override
 	public void Update(User user) {
-		// TODO Auto-generated method stub
-		
+		userDao.Update(user);
 	}
 
 	@Override
-	public List<User> Query(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<User> Query(User user, 
+			int start, int num, 
+			String order_column, String order_schema) {
+		if(user.getUsername() == null) user.setUsername("%");
+		else user.setUsername(user.getUsername() + "%");
+		if(user.getNickname() == null) user.setNickname("%");
+		else user.setNickname(user.getNickname() + "%");
+		logger.debug("User:" + user.getUsername() + "|" + user.getNickname());
+		List<User> res = userDao.Query(user, start, num, order_column, order_schema);
+		return res; 
 	}
 
 	@Override
-	public User getById() {
-		// TODO Auto-generated method stub
-		return null;
+	public User getById(int id) {
+		User res = userDao.getById(id);
+		return res;
 	}
 
 	@Override
-	public User getByUsername() {
-		// TODO Auto-generated method stub
-		return null;
+	public User getByUsername(String username) {
+		User res = userDao.getByUsername(username);
+		return res;
 	}
 
 	@Override
-	public boolean Exists(User user) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean Exists(String username) {
+		User res = userDao.getByUsername(username);
+		if(null == res) return false;
+		else return true;
 	}
 
 	public IUserDao getUserDao() {
@@ -67,5 +75,11 @@ public class UserService implements IUSerService {
 
 	public void setUserDao(IUserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	@Override
+	public int getNum(User user) {
+		int res = getNum(user);
+		return res;
 	}
 }

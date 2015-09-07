@@ -1,17 +1,31 @@
 package com.fhp.mvctest.service;
 
-import org.springframework.stereotype.Service;
+import com.fhp.mvctest.dao.IUserDao;
+import com.fhp.mvctest.entity.User;
 
-@Service
 public class LoginService implements ILoginService {
 
+	private IUserDao userDao;
+	
 	@Override
 	public int Login(String name, String password) {
-		if(name.equals("admin") && password.equals("12345")) {
-			return 1;
+		int res = 0;
+		User user = userDao.getByUsername(name);
+		if(null == user) res = -1;
+		else if(!user.getPassword().equals(password)) {
+			res = -1;
 		} else {
-			return 0;
+			res = user.getId();
 		}
+		return res;
+	}
+
+	public IUserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
 	}
 	
 }

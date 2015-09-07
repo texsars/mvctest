@@ -20,7 +20,7 @@ public class LoginController {
 	public String Login(String name, String password, HttpServletRequest request) {
 		logger.info("用户尝试登录。用户名：" + name);
 		int status = loginService.Login(name, password);
-		if(status == 1) {
+		if(status > 0) {
 			logger.info("用户登录成功。用户名：" + name);
 			HttpSession session = request.getSession();
 			session.setAttribute("user", "admin");
