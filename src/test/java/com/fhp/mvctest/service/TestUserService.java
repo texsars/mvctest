@@ -33,13 +33,13 @@ public class TestUserService {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void TestGetByUsername() {
 		User user = userService.getByUsername("adminx");
 		assertEquals("管理", user.getNickname());
 	}
 	
-//	@Test
+	@Test
 	public void TestGetById() {
 		User user = userService.getById(1);
 		assertEquals("管理", user.getNickname());
