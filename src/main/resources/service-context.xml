@@ -29,7 +29,7 @@
 		<!--  <property name="configLocation" value="classpath:mybatis-config.xml"></property>  -->
 		<property name="mapperLocations">
             <list>
-               <value>classpath:com/fhp/mvctest/dao/UserDao.xml</value>
+               <value>classpath*:com/fhp/mvctest/dao/UserDao.xml</value>
             </list>
         </property>
         <property name="typeAliasesPackage" value="com.fhp.mvctest.entity" />
