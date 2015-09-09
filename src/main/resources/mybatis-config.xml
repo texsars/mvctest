@@ -20,7 +20,9 @@
     	</environment>
 	</environments>
 	 -->
+	 <!--  
 	<mappers>
-		<mapper resource="com/fhp/mvctest/dao/UserDao.xml"/>
+		<mapper resource="classpath*:com/fhp/mvctest/dao/UserDao.xml"/>
 	</mappers>
+	-->
 </configuration>
