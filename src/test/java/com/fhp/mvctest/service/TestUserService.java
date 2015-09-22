@@ -16,7 +16,7 @@ public class TestUserService {
 	
 	@BeforeClass
 	public static void setUp() {
-		ApplicationContext ac =  new FileSystemXmlApplicationContext("src/main/resources/service-context.xml");
+		ApplicationContext ac =  new FileSystemXmlApplicationContext("classpath:service-context.xml");
 		userService = (IUSerService) ac.getBean("userService");
 	}
 	

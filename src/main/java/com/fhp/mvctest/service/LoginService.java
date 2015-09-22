@@ -13,7 +13,7 @@ public class LoginService implements ILoginService {
 		User user = userDao.getByUsername(name);
 		if(null == user) res = -1;
 		else if(!user.getPassword().equals(password)) {
-			res = -1;
+			res = -2;
 		} else {
 			res = user.getId();
 		}
