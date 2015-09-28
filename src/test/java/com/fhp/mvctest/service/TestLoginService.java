@@ -22,13 +22,13 @@ public class TestLoginService {
 	
 	@Test
 	public void testLoginSuccess() {
-		int status = loginService.Login("adminx", "xxxxx");
+		int status = loginService.Login("admin", "12345");
 		assertThat(status, greaterThan(0));
 	}
 	
 	@Test
 	public void testUsernameError() {
-		int status = loginService.Login("admin", "xxxxx");
+		int status = loginService.Login("adminx", "xxxxx");
 		assertThat(status, equalTo(-1));
 	}
 	
@@ -40,7 +40,7 @@ public class TestLoginService {
 	
 	@Test
 	public void testPasswordError() {
-		int status = loginService.Login("adminx", "");
+		int status = loginService.Login("admin", "");
 		assertThat(status, equalTo(-2));
 	}
 }
