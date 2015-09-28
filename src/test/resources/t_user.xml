@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<t_user id="1" username="admin" password="12345" nickname="管理员"/>
+	<t_user id="2" username="user1" password="123456" nickname="普通用户1"/>
+	<t_user id="3" username="root" password="123456" nickname="超级管理员"/>
+	<t_user id="4" username="user2" password="123456" nickname="普通用户2"/>
+	<t_user id="5" username="user3" password="123456" nickname="普通用户3"/>
+	<t_user id="6" username="user4" password="123456" nickname="普通用户4"/>
+	<t_user id="7" username="user5" password="123456" nickname="普通用户5"/>
+	<t_user id="8" username="user6" password="123456" nickname="普通用户6"/>
+	<t_user id="9" username="user7" password="123456" nickname="普通用户7"/>
+	<t_user id="10" username="user8" password="123456" nickname="普通用户8"/>
+	<t_user id="11" username="user9" password="123456" nickname="普通用户9"/>
+	<t_user id="12" username="user10" password="123456" nickname="普通用户10"/>
+	<t_user id="13" username="user11" password="123456" nickname="普通用户11"/>
+	<t_user id="14" username="user12" password="123456" nickname="普通用户12"/>
+	<t_user id="15" username="user13" password="123456" nickname="普通用户13"/>
+	<t_user id="16" username="user14" password="123456" nickname="普通用户14"/>
+	<t_user id="17" username="user15" password="123456" nickname="普通用户15"/>
+	<t_user id="18" username="user16" password="123456" nickname="普通用户16"/>
+</dataset>

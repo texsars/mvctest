@@ -41,6 +41,11 @@ public class UserService implements IUSerService {
 	public List<User> Query(User user, 
 			int start, int num, 
 			String order_column, String order_schema) {
+		if(null == user) {
+			user = new User();
+			user.setUsername("%");
+			user.setNickname("%");
+		}
 		if(user.getUsername() == null) user.setUsername("%");
 		else user.setUsername(user.getUsername() + "%");
 		if(user.getNickname() == null) user.setNickname("%");

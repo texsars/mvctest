@@ -21,7 +21,8 @@
 	<select id="Query" resultType="User">
 		select *
 		from t_user
-		where username like #{user.username} and nickname like #{user.nickname};
+		where username like #{user.username} and nickname like #{user.nickname}
+		limit #{start},#{num};
 	</select>
 	
 	<select id="getById" resultType="User">
