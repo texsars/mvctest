@@ -101,6 +101,7 @@ public class TestUserService {
 		userService.getByUsername("admin");
 	}
 	
+	@Ignore
 	@Test
 	public void TestGetById() {
 		User user = userService.getById(1);
