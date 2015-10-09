@@ -16,13 +16,11 @@ import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-import org.springframework.transaction.annotation.Propagation;
 
 public abstract class AbtractDbUnitTestCase {
 	protected static IDatabaseConnection dbConn;
@@ -34,35 +32,30 @@ public abstract class AbtractDbUnitTestCase {
 		ApplicationContext ac =  new FileSystemXmlApplicationContext("classpath:service-context.xml");
 		DataSource dataSource = (DataSource)ac.getBean("dataSource");
 		Connection conn = null;
-
 		conn = dataSource.getConnection();
 
-		dbConn = new DatabaseConnection(conn);
-//		IDataSet dataSet = new FlatXmlDataSet(new InputSource(TestDbUnit.class.getResourceAsStream("src/test/resources/t_user.xml")));
-		dataSet = new FlatXmlDataSet(new File("src/test/resources/t_user.xml"));
+		EstablishConnection(conn, new File("src/test/resources/t_user.xml"));
 		
-		/*Backup data from database.*/
-		IDataSet realDataSet = dbConn.createDataSet();
-		FlatXmlDataSet.write(realDataSet, new FileWriter(new File("src/test/resources/real_data.xml")));
+		Backup();
 	}
 	
-	protected void EstablishConnection(Connection conn, File file) throws DataSetException, IOException {
+	protected static void EstablishConnection(Connection conn, File file) throws DataSetException, IOException {
 		dbConn = new DatabaseConnection(conn);
-		dataSet = new FlatXmlDataSet(new File("src/test/resources/t_user.xml"));
+		dataSet = new FlatXmlDataSet(file);
 	}
 	
-	protected void Backup() throws SQLException, DataSetException, IOException {
+	protected static void Backup() throws SQLException, DataSetException, IOException {
 		IDataSet realDataSet = dbConn.createDataSet();
 		backupFile = File.createTempFile("backup", "xml");
 		FlatXmlDataSet.write(realDataSet, new FileWriter(backupFile));
 	}
 	
-	protected void BackupOneTable(String tableName) throws SQLException, IOException, DataSetException {
+	protected static void BackupOneTable(String tableName) throws SQLException, IOException, DataSetException {
 		String[] tableNames = new String[]{tableName};
 		BackupCustomTable(tableNames);
 	}
 	
-	protected void BackupCustomTable(String[] tableNames) throws SQLException, DataSetException, IOException {
+	protected static void BackupCustomTable(String[] tableNames) throws SQLException, DataSetException, IOException {
 		QueryDataSet queryDataSet = new QueryDataSet(dbConn);
 		for(String tableName : tableNames) {
 			queryDataSet.addTable(tableName);
@@ -74,7 +67,7 @@ public abstract class AbtractDbUnitTestCase {
 		DatabaseOperation.CLEAN_INSERT.execute(dbConn, dataSet);
 	}
 	
-	protected void Resume() throws DatabaseUnitException, SQLException, IOException {
+	protected static void Resume() throws DatabaseUnitException, SQLException, IOException {
 		IDataSet realDataSet = new FlatXmlDataSet(backupFile);
 		DatabaseOperation.CLEAN_INSERT.execute(dbConn, realDataSet);
 	}
@@ -85,7 +78,7 @@ public abstract class AbtractDbUnitTestCase {
 	}
 	
 	@AfterClass
-	protected void destroy() throws DatabaseUnitException, SQLException, IOException {
+	protected static void destroy() throws DatabaseUnitException, SQLException, IOException {
 		Resume();
 	}
 }
