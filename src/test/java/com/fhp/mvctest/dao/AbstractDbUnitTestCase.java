@@ -22,7 +22,7 @@ import org.junit.BeforeClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-public abstract class AbtractDbUnitTestCase {
+public abstract class AbstractDbUnitTestCase {
 	protected static IDatabaseConnection dbConn;
 	protected static IDataSet dataSet;
 	protected static File backupFile; 
@@ -34,12 +34,12 @@ public abstract class AbtractDbUnitTestCase {
 		Connection conn = null;
 		conn = dataSource.getConnection();
 
-		EstablishConnection(conn, new File("src/test/resources/t_user.xml"));
+		EstablishDbUnitConnection(conn, new File("src/test/resources/t_user.xml"));
 		
 		Backup();
 	}
 	
-	protected static void EstablishConnection(Connection conn, File file) throws DataSetException, IOException {
+	protected static void EstablishDbUnitConnection(Connection conn, File file) throws DataSetException, IOException {
 		dbConn = new DatabaseConnection(conn);
 		dataSet = new FlatXmlDataSet(file);
 	}
@@ -73,12 +73,12 @@ public abstract class AbtractDbUnitTestCase {
 	}
 	
 	@Before
-	protected void setUp() throws DatabaseUnitException, SQLException {
+	public void setUp() throws DatabaseUnitException, SQLException {
 		PrepareForTest();
 	}
 	
 	@AfterClass
-	protected static void destroy() throws DatabaseUnitException, SQLException, IOException {
+	public static void destroy() throws DatabaseUnitException, SQLException, IOException {
 		Resume();
 	}
 }

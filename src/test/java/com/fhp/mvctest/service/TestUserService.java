@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
@@ -25,39 +26,19 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.fhp.mvctest.dao.AbstractDbUnitTestCase;
 import com.fhp.mvctest.entity.User;
 
-public class TestUserService {
+public class TestUserService extends AbstractDbUnitTestCase {
 	private static IUSerService userService;
-	private static IDatabaseConnection dbConn;
-	private static IDataSet dataSet;
+	
 	@BeforeClass
-	public static void init() throws SQLException, IOException, DatabaseUnitException {
+	public static void init() throws DataSetException, IOException, SQLException {
 		ApplicationContext ac =  new FileSystemXmlApplicationContext("classpath:service-context.xml");
 		userService = (IUSerService) ac.getBean("userService");
-		
+		AbstractDbUnitTestCase.init();
 		/*Create dbunit connection and dataset.*/
-		DataSource dataSource = (DataSource)ac.getBean("dataSource");
-		Connection conn = dataSource.getConnection();
-		dbConn = new DatabaseConnection(conn);
-//		IDataSet dataSet = new FlatXmlDataSet(new InputSource(TestDbUnit.class.getResourceAsStream("src/test/resources/t_user.xml")));
-		dataSet = new FlatXmlDataSet(new File("src/test/resources/t_user.xml"));
 		
-		/*Backup data from database.*/
-		IDataSet realDataSet = dbConn.createDataSet();
-		FlatXmlDataSet.write(realDataSet, new FileWriter(new File("src/test/resources/real_data.xml")));
-	}
-	
-	@AfterClass
-	public static void destroy() throws SQLException, DatabaseUnitException, IOException {
-		IDataSet realDataSet = new FlatXmlDataSet(new File("src/test/resources/real_data.xml"));
-		DatabaseOperation.CLEAN_INSERT.execute(dbConn, realDataSet);
-	}
-	
-	@Before
-	public void setUp() throws DatabaseUnitException, SQLException {		
-		/*Clean changes from last test case.*/
-		DatabaseOperation.CLEAN_INSERT.execute(dbConn, dataSet);
 	}
 	
 	@Test
@@ -101,7 +82,7 @@ public class TestUserService {
 		userService.getByUsername("admin");
 	}
 	
-	// @Test
+	@Test
 	public void TestGetById() {
 		User user = userService.getById(1);
 		assertEquals("管理员", user.getNickname());
