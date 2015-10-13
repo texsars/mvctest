@@ -48,12 +48,20 @@ public class HomeController {
 	}
 
 	@AccessRequired
-	@RequestMapping(value = "/jsontest.action", produces="application/json;charset=UTF-8")
+	@RequestMapping(value = "/jsontest.action"/*, produces="application/json;charset=UTF-8"*/)
 	public @ResponseBody Object JsonTest(Locale locale, Model model) {
 		logger.info("JsonTest start! The client locale is {}.", locale);
 		userService.Oper1();
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("num", 1);
+		return dataMap;
+	}
+	
+	@RequestMapping(value="/paramtest.action"/*, produces="application/json;charset=UTF-8"*/)
+	public @ResponseBody Object ParamTest(String param) {
+		logger.info("JsonTest start! The parameter is \"{}\".", param);
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("param", param);
 		return dataMap;
 	}
 }

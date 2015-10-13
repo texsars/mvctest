@@ -30,15 +30,16 @@ import com.fhp.mvctest.dao.AbstractDbUnitTestCase;
 import com.fhp.mvctest.entity.User;
 
 public class TestUserService extends AbstractDbUnitTestCase {
+	
 	private static IUSerService userService;
 	
 	@BeforeClass
 	public static void init() throws DataSetException, IOException, SQLException {
 		ApplicationContext ac =  new FileSystemXmlApplicationContext("classpath:service-context.xml");
 		userService = (IUSerService) ac.getBean("userService");
-		AbstractDbUnitTestCase.init();
-		/*Create dbunit connection and dataset.*/
 		
+		/*Create dbunit connection and dataset.*/
+		AbstractDbUnitTestCase.init();
 	}
 	
 	@Test
